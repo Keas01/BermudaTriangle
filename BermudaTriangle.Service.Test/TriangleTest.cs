@@ -14,7 +14,7 @@ namespace BermudaTriangle.Service.Test
             _factory = new TriangleFactory();
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("Shape")]
         public void WhereAmI_ValidBottomTriangleGridReference_CoordinatesReturned()
         {
             //Arrange
@@ -41,7 +41,7 @@ namespace BermudaTriangle.Service.Test
             Assert.AreEqual(expectedBottom.Y, actualBottom.Y);
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("Shape")]
         public void WhereAmI_ValidTopTriangleGridReference_CoordinatesReturned()
         {
             //Arrange
@@ -67,7 +67,7 @@ namespace BermudaTriangle.Service.Test
             Assert.AreEqual(expectedBottom.Y, actualBottom.Y);
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("Shape")]
         public void WhoAmI_ValidBottomTriangleCoordinates_GridReferenceReturned()
         {
             //Arrange
@@ -87,7 +87,7 @@ namespace BermudaTriangle.Service.Test
             Assert.AreEqual(expected, actual);
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("Shape")]
         public void WhoAmI_ValidTopTriangleCoordinates_GridReferenceReturned()
         {
             //Arrange
