@@ -5,10 +5,10 @@ using System.Linq;
 namespace BermudaTriangle.Service.Test
 {
     [TestClass]
-    public class UnitTest1
+    public class TriangleTests
     {
         [TestMethod]
-        public void GetCoordinates_ValidFirstColCoordinates_CoordinatesReturned()
+        public void WhereAmI_ValidBottomTriangleGridReference_CoordinatesReturned()
         {
             //Arrange
             IImage gTotest = new Triangle();
@@ -18,23 +18,49 @@ namespace BermudaTriangle.Service.Test
 
             //Act
             List<Coordinate> result = gTotest.WhereAmI("A1");
-            Coordinate top = result.First();
-            Coordinate corner = result.Skip(1).Take(1).First();
-            Coordinate bottom = result.Last();
+            Coordinate actualTop = result.First();
+            Coordinate actualCorner = result.Skip(1).Take(1).First();
+            Coordinate actualBottom = result.Last();
 
             //Assert
-            Assert.AreEqual(expectedTop.X, top.X);
-            Assert.AreEqual(expectedTop.Y, top.Y);
+            Assert.AreEqual(expectedTop.X, actualTop.X);
+            Assert.AreEqual(expectedTop.Y, actualTop.Y);
 
-            Assert.AreEqual(expectedCorner.X, corner.X);
-            Assert.AreEqual(expectedCorner.Y, corner.Y);
+            Assert.AreEqual(expectedCorner.X, actualCorner.X);
+            Assert.AreEqual(expectedCorner.Y, actualCorner.Y);
 
-            Assert.AreEqual(expectedBottom.X, bottom.X);
-            Assert.AreEqual(expectedBottom.Y, bottom.Y);
+            Assert.AreEqual(expectedBottom.X, actualBottom.X);
+            Assert.AreEqual(expectedBottom.Y, actualBottom.Y);
         }
 
         [TestMethod]
-        public void WhoAmI_ValidCoordinates_GridReferenceReturned()
+        public void WhereAmI_ValidTopTriangleGridReference_CoordinatesReturned()
+        {
+            //Arrange
+            IImage gTotest = new Triangle();
+            Coordinate expectedTop = new Coordinate { X = 10, Y = 20 };
+            Coordinate expectedCorner = new Coordinate { X = 20, Y = 20 };
+            Coordinate expectedBottom = new Coordinate { X = 20, Y = 30 };
+
+            //Act
+            List<Coordinate> result = gTotest.WhereAmI("C4");
+            Coordinate actualTop = result.First();
+            Coordinate actualCorner = result.Skip(1).Take(1).First();
+            Coordinate actualBottom = result.Last();
+
+            //Assert
+            Assert.AreEqual(expectedTop.X, actualTop.X);
+            Assert.AreEqual(expectedTop.Y, actualTop.Y);
+
+            Assert.AreEqual(expectedCorner.X, actualCorner.X);
+            Assert.AreEqual(expectedCorner.Y, actualCorner.Y);
+
+            Assert.AreEqual(expectedBottom.X, actualBottom.X);
+            Assert.AreEqual(expectedBottom.Y, actualBottom.Y);
+        }
+
+        [TestMethod]
+        public void WhoAmI_ValidBottomTriangleCoordinates_GridReferenceReturned()
         {
             //Arrange
             IImage gTotest = new Triangle();
@@ -45,14 +71,16 @@ namespace BermudaTriangle.Service.Test
                 new Coordinate { X = 40, Y = 50 },
                 new Coordinate { X = 50, Y = 50 }
             };
+
             //Act
             string actual = gTotest.WhoAmI(locations);
 
+            //Assert
             Assert.AreEqual(expected, actual);
         }
 
         [TestMethod]
-        public void WhoAmI_ValidEventCoordinates_GridReferenceReturned()
+        public void WhoAmI_ValidTopTriangleCoordinates_GridReferenceReturned()
         {
             //Arrange
             IImage gTotest = new Triangle();
@@ -63,9 +91,11 @@ namespace BermudaTriangle.Service.Test
                 new Coordinate { X = 20, Y = 50 },
                 new Coordinate { X = 20, Y = 60 }
             };
+
             //Act
             string actual = gTotest.WhoAmI(locations);
 
+            //Assert
             Assert.AreEqual(expected, actual);
         }
     }

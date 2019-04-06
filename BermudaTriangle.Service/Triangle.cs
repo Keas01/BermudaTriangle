@@ -5,23 +5,20 @@ using System.Text;
 
 namespace BermudaTriangle.Service
 {
-    public class Triangle : IImage
+    public class Triangle : Image, IImage
     {
         public Triangle()
         {
             ImageSide = 10;
         }
 
-        public int ImageSide { get; set; }
-        public int Row { get; set; }
-        public int Col { get; set; }
-
         public string WhoAmI(List<Coordinate> locations)
         {
             Coordinate top = locations.First();
             Coordinate corner = locations.Skip(1).Take(1).First();
             Coordinate bottom = locations.Last();
-            if (top.Y == corner.Y)
+
+            if (top.Y == corner.Y)//top triangle
             {
                 //0
                 Row = (corner.Y / ImageSide) + 1;
@@ -40,38 +37,6 @@ namespace BermudaTriangle.Service
                 Col = (corner.X / ImageSide) * 2;
             }
             return string.Format("{0}{1}", Number2String(Row, true), Col);
-        }
-
-        /// <summary>
-        /// Idea from
-        /// https://social.msdn.microsoft.com/Forums/vstudio/en-US/78e75d1a-0795-4bdb-8a62-ae6faa909986/convert-number-to-alphabet?forum=csharpgeneral
-        /// </summary>
-        /// <param name="number"></param>
-        /// <param name="isCaps"></param>
-        /// <returns></returns>
-        private String Number2String(int number, bool isCaps)
-        {
-            Char c = (Char)((isCaps ? 65 : 97) + (number - 1));
-            return c.ToString();
-        }
-
-        public int ConvertRow(string gRef)
-        {
-            //A2
-            char letter = gRef.ToCharArray().FirstOrDefault();
-
-            //returns A
-            //https://stackoverflow.com/questions/20044730/convert-character-to-its-alphabet-integer-position
-            int index = (int)letter % 32;
-
-            return index;
-        }
-
-        public int ConvertColumn(string gRef)
-        {
-            int col;
-            int.TryParse(gRef.Substring(1), out col);
-            return col;
         }
 
         public List<Coordinate> WhereAmI(string gRef)
