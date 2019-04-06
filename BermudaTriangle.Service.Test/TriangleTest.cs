@@ -7,11 +7,19 @@ namespace BermudaTriangle.Service.Test
     [TestClass]
     public class TriangleTests
     {
+        private ImageFactory _factory;
+
+        public TriangleTests()
+        {
+            _factory = new TriangleFactory();
+        }
+
         [TestMethod]
         public void WhereAmI_ValidBottomTriangleGridReference_CoordinatesReturned()
         {
             //Arrange
-            IImage gTotest = new Triangle();
+
+            IImage gTotest = _factory.GetImage();
             Coordinate expectedTop = new Coordinate { X = 0, Y = 0 };
             Coordinate expectedCorner = new Coordinate { X = 0, Y = 10 };
             Coordinate expectedBottom = new Coordinate { X = 10, Y = 10 };
@@ -37,7 +45,7 @@ namespace BermudaTriangle.Service.Test
         public void WhereAmI_ValidTopTriangleGridReference_CoordinatesReturned()
         {
             //Arrange
-            IImage gTotest = new Triangle();
+            IImage gTotest = _factory.GetImage();
             Coordinate expectedTop = new Coordinate { X = 10, Y = 20 };
             Coordinate expectedCorner = new Coordinate { X = 20, Y = 20 };
             Coordinate expectedBottom = new Coordinate { X = 20, Y = 30 };
@@ -63,7 +71,7 @@ namespace BermudaTriangle.Service.Test
         public void WhoAmI_ValidBottomTriangleCoordinates_GridReferenceReturned()
         {
             //Arrange
-            IImage gTotest = new Triangle();
+            IImage gTotest = _factory.GetImage();
             string expected = "E9";
             List<Coordinate> locations = new List<Coordinate>
             {
@@ -83,7 +91,7 @@ namespace BermudaTriangle.Service.Test
         public void WhoAmI_ValidTopTriangleCoordinates_GridReferenceReturned()
         {
             //Arrange
-            IImage gTotest = new Triangle();
+            IImage gTotest = _factory.GetImage();
             string expected = "F4";
             List<Coordinate> locations = new List<Coordinate>
             {
