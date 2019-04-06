@@ -62,7 +62,7 @@ namespace BermudaTriangle.Service.Test
             };
 
             //Act
-            HttpResponseMessage response = _client.GetAsync(getUrl,).Result;
+            HttpResponseMessage response = _client.GetAsync(getUrl).Result;
 
             string loc = response.Content.ReadAsStringAsync().Result;
             List<Coordinate> result = JsonConvert.DeserializeObject<List<Coordinate>>(loc);
