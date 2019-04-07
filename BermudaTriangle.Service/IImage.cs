@@ -6,6 +6,8 @@ namespace BermudaTriangle.Service
 {
     public interface IImage
     {
+        void SortVertices(List<Coordinate> locations);
+
         List<Coordinate> WhereAmI(string gRef);
 
         string WhoAmI(List<Coordinate> location);

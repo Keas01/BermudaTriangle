@@ -7,45 +7,70 @@ namespace BermudaTriangle.Service
 {
     public class Triangle : Image, IImage
     {
+        private Coordinate _top = null;
+        private Coordinate _corner = null;
+        private Coordinate _bottom = null;
+
         public Triangle()
         {
             ImageSide = 10;
         }
 
+        public Triangle(int size)
+        {
+            ImageSide = size;
+        }
+
+        public void SortVertices(List<Coordinate> locations)
+        {
+            _top = locations.OrderBy(l => l.X).ThenBy(l => l.Y).First();
+
+            _bottom = locations.Where(l => l.X == _top.X + ImageSide && l.Y == _top.Y + ImageSide).FirstOrDefault();
+
+            _corner = locations.Where(l => l.X == _top.X + ImageSide && l.Y == _top.Y).FirstOrDefault();
+            if (_corner == null)
+            {
+                _corner = locations.Where(l => l.Y == _top.Y + ImageSide && l.X == _top.X).FirstOrDefault();
+            }
+
+            if (_top == null || _bottom == null || _corner == null)
+            {
+                throw new InvalidOperationException("This aint a triangle");
+            }
+        }
+
         public string WhoAmI(List<Coordinate> locations)
         {
-            Coordinate top = locations.First();
-            Coordinate corner = locations.Skip(1).Take(1).First();
-            Coordinate bottom = locations.Last();
-
-            if (top.Y == corner.Y)//top triangle
+            SortVertices(locations);
+            int row;
+            int col;
+            if (_top.Y == _corner.Y)//top triangle
             {
                 //0
-                Row = (corner.Y / ImageSide) + 1;
+                row = (_corner.Y / ImageSide) + 1;
             }
             else
             {
-                Row = (corner.Y / ImageSide);
+                row = (_corner.Y / ImageSide);
             }
 
-            if (top.X == corner.X)//bottom triangle
+            if (_top.X == _corner.X)//bottom triangle
             {
-                Col = ((corner.X / ImageSide) * 2) + 1;
+                col = ((_corner.X / ImageSide) * 2) + 1;
             }
             else
             {
-                Col = (corner.X / ImageSide) * 2;
+                col = (_corner.X / ImageSide) * 2;
             }
-            return string.Format("{0}{1}", Number2String(Row, true), Col);
+            return string.Format("{0}{1}", Grid.Number2String(row, true), col);
         }
 
         public List<Coordinate> WhereAmI(string gRef)
         {
             List<Coordinate> myCords = new List<Coordinate>();
 
-            int col = ConvertColumn(gRef);
-            int row = ConvertRow(gRef);
-            ImageSide = 10;
+            int col = Grid.ConvertColumn(gRef);
+            int row = Grid.ConvertRow(gRef);
 
             if (col % 2 == 0)
             {
