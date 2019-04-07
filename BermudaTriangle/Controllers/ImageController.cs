@@ -21,29 +21,66 @@ namespace BermudaTriangle.Controllers
             factory = fac;
         }
 
-        [HttpGet("{gRef}")]
-        public ActionResult<List<Coordinate>> Get(string gRef)
+        private bool AmIAGridRef(string gRef)
         {
-            IImage t = factory.GetImage();
-            List<Coordinate> locations = t.WhereAmI(gRef);
+            return int.TryParse(gRef.Substring(1), out int rowNum);
+        }
 
-            return locations;
+        private bool AmICoordinates(string gRef, out List<Coordinate> locations)
+        {
+            locations = JsonConvert.DeserializeObject<List<Coordinate>>(gRef);
+            return locations.Count() > 0;
+        }
+
+        [HttpGet("{gRef}")]
+        public IActionResult Get(string gRef)
+        {
+            try
+            {
+                IImage t = factory.GetImage();
+
+                if (AmIAGridRef(gRef))
+                {
+                    List<Coordinate> locations = t.WhereAmI(gRef);
+                    return Ok(locations);
+                }
+                else if (AmICoordinates(gRef, out List<Coordinate> loc))
+                {
+                    string gridRef = t.WhoAmI(loc);
+                    return Ok(gridRef);
+                }
+                else
+                {
+                    return BadRequest("Please provide either grid coordinates or grid reference of image");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpGet]
         public ActionResult<string> Get(JToken locations)
         {
-            if (locations == null)
+            try
             {
-                return BadRequest("Please provide Image Vertices");
+                if (locations == null)
+                {
+                    return BadRequest("Please provide Image Vertices");
+                }
+
+                IImage t = factory.GetImage();
+                List<Coordinate> loc = JsonConvert.DeserializeObject<List<Coordinate>>(locations.ToString());
+
+                string gridRef = t.WhoAmI(loc);
+
+                return Ok(gridRef);
             }
-
-            List<Coordinate> loc = JsonConvert.DeserializeObject<List<Coordinate>>(locations.ToString());
-
-            IImage t = factory.GetImage();
-            string gridRef = t.WhoAmI(loc);
-
-            return gridRef;
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
     }
 }
