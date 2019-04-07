@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,6 +13,42 @@ namespace BermudaTriangle.Service.Test
         public TriangleTests()
         {
             _factory = new TriangleFactory();
+        }
+
+        [TestMethod, TestCategory("Shape")]
+        public void SortVertices_ValidCoordinates_TriangleSorted()
+        {
+            //Arrange
+            IImage gTotest = _factory.GetImage();
+
+            List<Coordinate> locations = new List<Coordinate>
+            {
+                new Coordinate { X = 10, Y = 50 },
+                new Coordinate { X = 20, Y = 50 },
+                new Coordinate { X = 20, Y = 60 }
+            };
+
+            ((Triangle)gTotest).SortVertices(locations);
+
+            Assert.IsTrue(gTotest != null);
+        }
+
+        [TestMethod, TestCategory("Shape"), ExpectedException(typeof(InvalidOperationException))]
+        public void SortVertices_InvalidCoordinates_ExceptionThrown()
+        {
+            //Arrange
+            IImage gTotest = _factory.GetImage();
+
+            List<Coordinate> locations = new List<Coordinate>
+            {
+                new Coordinate { X = 10, Y = 20 },
+                new Coordinate { X = 20, Y = 100 },
+                new Coordinate { X = 20, Y = 70 }
+            };
+
+            gTotest.SortVertices(locations);
+
+            Assert.Fail("An exception should have been thrown");
         }
 
         [TestMethod, TestCategory("Shape")]
@@ -88,6 +125,26 @@ namespace BermudaTriangle.Service.Test
         }
 
         [TestMethod, TestCategory("Shape")]
+        public void WhoAmI_ValidBottomTriangleCoordinatesInWrongOrder_GridReferenceReturned()
+        {
+            //Arrange
+            IImage gTotest = _factory.GetImage();
+            string expected = "E9";
+            List<Coordinate> locations = new List<Coordinate>
+            {
+                new Coordinate { X = 50, Y = 50 },
+                new Coordinate { X = 40, Y = 40 },
+                new Coordinate { X = 40, Y = 50 }
+            };
+
+            //Act
+            string actual = gTotest.WhoAmI(locations);
+
+            //Assert
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod, TestCategory("Shape")]
         public void WhoAmI_ValidTopTriangleCoordinates_GridReferenceReturned()
         {
             //Arrange
@@ -97,6 +154,26 @@ namespace BermudaTriangle.Service.Test
             {
                 new Coordinate { X = 10, Y = 50 },
                 new Coordinate { X = 20, Y = 50 },
+                new Coordinate { X = 20, Y = 60 }
+            };
+
+            //Act
+            string actual = gTotest.WhoAmI(locations);
+
+            //Assert
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod, TestCategory("Shape")]
+        public void WhoAmI_ValidTopTriangleCoordinatesInWrongOrder_GridReferenceReturned()
+        {
+            //Arrange
+            IImage gTotest = _factory.GetImage();
+            string expected = "F4";
+            List<Coordinate> locations = new List<Coordinate>
+            {
+                new Coordinate { X = 20, Y = 50 },
+                new Coordinate { X = 10, Y = 50 },
                 new Coordinate { X = 20, Y = 60 }
             };
 

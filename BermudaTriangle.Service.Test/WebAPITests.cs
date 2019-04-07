@@ -50,16 +50,13 @@ namespace BermudaTriangle.Service.Test
         }
 
         [TestMethod, TestCategory("WepAPI")]
-        public void GetByLocation_ValidLocations_GridRefReturned()
+        public void GetByGridRef_InValidGridRef_500Returned()
         {
             //Arrange
             string getUrl = string.Format("{0}/a1", _url);
-            List<Coordinate> locations = new List<Coordinate>
-            {
-                new Coordinate { X = 0, Y = 0 },
-                new Coordinate { X = 0, Y = 10 },
-                new Coordinate { X = 10, Y = 10 }
-            };
+            Coordinate expectedTop = new Coordinate { X = 0, Y = 0 };
+            Coordinate expectedCorner = new Coordinate { X = 0, Y = 10 };
+            Coordinate expectedBottom = new Coordinate { X = 10, Y = 10 };
 
             //Act
             HttpResponseMessage response = _client.GetAsync(getUrl).Result;
@@ -72,6 +69,37 @@ namespace BermudaTriangle.Service.Test
             Coordinate actualBottom = result.Last();
 
             //Assert
+            Assert.AreEqual(expectedTop.X, actualTop.X);
+            Assert.AreEqual(expectedTop.Y, actualTop.Y);
+
+            Assert.AreEqual(expectedCorner.X, actualCorner.X);
+            Assert.AreEqual(expectedCorner.Y, actualCorner.Y);
+
+            Assert.AreEqual(expectedBottom.X, actualBottom.X);
+            Assert.AreEqual(expectedBottom.Y, actualBottom.Y);
+        }
+
+        [TestMethod, TestCategory("WepAPI")]
+        public void GetByLocation_ValidLocations_GridRefReturned()
+        {
+            //Arrange
+            String expected = "A1";
+            List<Coordinate> locations = new List<Coordinate>
+            {
+                new Coordinate { X = 0, Y = 0 },
+                new Coordinate { X = 0, Y = 10 },
+                new Coordinate { X = 10, Y = 10 }
+            };
+
+            string getUrl = string.Format("{0}/{1}", _url, JsonConvert.SerializeObject(locations));
+
+            //Act
+            HttpResponseMessage response = _client.GetAsync(getUrl).Result;
+
+            string actual = response.Content.ReadAsStringAsync().Result;
+
+            //Assert
+            Assert.AreEqual(expected, actual);
         }
     }
 }
