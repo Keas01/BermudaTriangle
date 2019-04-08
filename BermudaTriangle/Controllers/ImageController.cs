@@ -21,8 +21,14 @@ namespace BermudaTriangle.Controllers
             factory = fac;
         }
 
-        [HttpGet("{gRef}")]
-        public IActionResult Get(string gRef)
+        [Route("Grid")]
+        public IActionResult Grid()
+        {
+            return Ok("Grid method found");
+        }
+
+        [Route("Location/{gRef}")]
+        public ActionResult<List<Coordinate>> Locations(string gRef)
         {
             try
             {
@@ -32,15 +38,33 @@ namespace BermudaTriangle.Controllers
                 {
                     List<Coordinate> locations = t.WhereAmI(gRef);
                     return Ok(locations);
-                }//incase locations are sent as parameter not in body
-                else if (Helper.AmICoordinates(gRef, out List<Coordinate> loc))
+                }
+                else
+                {
+                    return BadRequest("Please provide grid reference of image");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpGet("GridReference/{locations}", Name = "gridref")]
+        public IActionResult GridReference(string locations)
+        {
+            try
+            {
+                IImage t = factory.GetImage();
+
+                if (Helper.AmICoordinates(locations, out List<Coordinate> loc))
                 {
                     string gridRef = t.WhoAmI(loc);
                     return Ok(gridRef);
                 }
                 else
                 {
-                    return BadRequest("Please provide either grid coordinates or grid reference of image");
+                    return BadRequest("Please provide grid coordinates of image");
                 }
             }
             catch (Exception ex)

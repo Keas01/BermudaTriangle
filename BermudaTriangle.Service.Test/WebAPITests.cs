@@ -24,7 +24,7 @@ namespace BermudaTriangle.Service.Test
         public void GetByGridRef_ValidGridRef_LocationsReturned()
         {
             //Arrange
-            string getUrl = string.Format("{0}/a1", _url);
+            string getUrl = string.Format("{0}/Location/a1", _url);
             Coordinate expectedTop = new Coordinate { X = 0, Y = 0 };
             Coordinate expectedCorner = new Coordinate { X = 0, Y = 10 };
             Coordinate expectedBottom = new Coordinate { X = 10, Y = 10 };
@@ -54,7 +54,7 @@ namespace BermudaTriangle.Service.Test
         public void GetByGridRef_InValidGridRef_500Returned()
         {
             //Arrange
-            string getUrl = string.Format("{0}/InvalidParamets", _url);
+            string getUrl = string.Format("{0}/GridReference/InvalidParamets", _url);
             HttpStatusCode expected = HttpStatusCode.InternalServerError;
 
             //Act
@@ -78,7 +78,7 @@ namespace BermudaTriangle.Service.Test
                 new Coordinate { X = 10, Y = 10 }
             };
 
-            string getUrl = string.Format("{0}/{1}", _url, JsonConvert.SerializeObject(locations));
+            string getUrl = string.Format("{0}/GridReference/{1}", _url, JsonConvert.SerializeObject(locations));
 
             //Act
             HttpResponseMessage response = _client.GetAsync(getUrl).Result;
