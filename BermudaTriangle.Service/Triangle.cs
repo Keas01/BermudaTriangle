@@ -67,7 +67,7 @@ namespace BermudaTriangle.Service
 
         public List<Coordinate> WhereAmI(string gRef)
         {
-            List<Coordinate> myCords = new List<Coordinate>();
+            List<Coordinate> coordinates = new List<Coordinate>();
 
             int col = Grid.ConvertColumn(gRef);
             int row = Grid.ConvertRow(gRef);
@@ -84,9 +84,9 @@ namespace BermudaTriangle.Service
                 int bottomRightX = topRightX;
                 int bottomRightY = topRightY + ImageSide;
 
-                myCords.Add(new Coordinate(topLeftX, topLeftY));
-                myCords.Add(new Coordinate(topRightX, topRightY));
-                myCords.Add(new Coordinate(bottomRightX, bottomRightY));
+                coordinates.Add(new Coordinate(topLeftX, topLeftY));
+                coordinates.Add(new Coordinate(topRightX, topRightY));
+                coordinates.Add(new Coordinate(bottomRightX, bottomRightY));
             }
             else
             {
@@ -100,12 +100,12 @@ namespace BermudaTriangle.Service
                 int bottomRightX = bottomLeftX + ImageSide;
                 int bottomRightY = bottomLeftY;
 
-                myCords.Add(new Coordinate(topLeftX, topLeftY));
-                myCords.Add(new Coordinate(bottomLeftX, bottomLeftY));
-                myCords.Add(new Coordinate(bottomRightX, bottomRightY));
+                coordinates.Add(new Coordinate(topLeftX, topLeftY));
+                coordinates.Add(new Coordinate(bottomLeftX, bottomLeftY));
+                coordinates.Add(new Coordinate(bottomRightX, bottomRightY));
             }
 
-            return myCords;
+            return coordinates;
         }
     }
 }

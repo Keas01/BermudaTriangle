@@ -16,7 +16,7 @@ namespace BermudaTriangle.Service.Test
         }
 
         [TestMethod, TestCategory("Shape")]
-        public void SortVertices_ValidCoordinates_TriangleSorted()
+        public void ResolveVertices_ValidCoordinates_TriangleSorted()
         {
             //Arrange
             IImage gTotest = _factory.GetImage();
@@ -34,7 +34,7 @@ namespace BermudaTriangle.Service.Test
         }
 
         [TestMethod, TestCategory("Shape"), ExpectedException(typeof(InvalidOperationException))]
-        public void SortVertices_InvalidCoordinates_ExceptionThrown()
+        public void ResolveVertices_InvalidCoordinates_ExceptionThrown()
         {
             //Arrange
             IImage gTotest = _factory.GetImage();
