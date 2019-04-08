@@ -21,7 +21,7 @@ namespace BermudaTriangle.Service
             ImageSide = size;
         }
 
-        public void SortVertices(List<Coordinate> locations)
+        public void ResolveVertices(List<Coordinate> locations)
         {
             _top = locations.OrderBy(l => l.X).ThenBy(l => l.Y).First();
 
@@ -41,7 +41,7 @@ namespace BermudaTriangle.Service
 
         public string WhoAmI(List<Coordinate> locations)
         {
-            SortVertices(locations);
+            ResolveVertices(locations);
             int row;
             int col;
             if (_top.Y == _corner.Y)//top triangle
@@ -62,7 +62,7 @@ namespace BermudaTriangle.Service
             {
                 col = (_corner.X / ImageSide) * 2;
             }
-            return string.Format("{0}{1}", Grid.Number2String(row, true), col);
+            return string.Format("{0}{1}", Helper.Number2String(row, true), col);
         }
 
         public List<Coordinate> WhereAmI(string gRef)

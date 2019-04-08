@@ -28,7 +28,7 @@ namespace BermudaTriangle.Service.Test
                 new Coordinate { X = 20, Y = 60 }
             };
 
-            ((Triangle)gTotest).SortVertices(locations);
+            ((Triangle)gTotest).ResolveVertices(locations);
 
             Assert.IsTrue(gTotest != null);
         }
@@ -46,7 +46,7 @@ namespace BermudaTriangle.Service.Test
                 new Coordinate { X = 20, Y = 70 }
             };
 
-            gTotest.SortVertices(locations);
+            gTotest.ResolveVertices(locations);
 
             Assert.Fail("An exception should have been thrown");
         }

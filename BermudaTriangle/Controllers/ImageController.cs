@@ -21,17 +21,6 @@ namespace BermudaTriangle.Controllers
             factory = fac;
         }
 
-        private bool AmIAGridRef(string gRef)
-        {
-            return int.TryParse(gRef.Substring(1), out int rowNum);
-        }
-
-        private bool AmICoordinates(string gRef, out List<Coordinate> locations)
-        {
-            locations = JsonConvert.DeserializeObject<List<Coordinate>>(gRef);
-            return locations.Count() > 0;
-        }
-
         [HttpGet("{gRef}")]
         public IActionResult Get(string gRef)
         {
@@ -39,12 +28,12 @@ namespace BermudaTriangle.Controllers
             {
                 IImage t = factory.GetImage();
 
-                if (AmIAGridRef(gRef))
+                if (Helper.AmIAGridRef(gRef))
                 {
                     List<Coordinate> locations = t.WhereAmI(gRef);
                     return Ok(locations);
-                }
-                else if (AmICoordinates(gRef, out List<Coordinate> loc))
+                }//incase locations are sent as parameter not in body
+                else if (Helper.AmICoordinates(gRef, out List<Coordinate> loc))
                 {
                     string gridRef = t.WhoAmI(loc);
                     return Ok(gridRef);
@@ -61,7 +50,7 @@ namespace BermudaTriangle.Controllers
         }
 
         [HttpGet]
-        public ActionResult<string> Get(JToken locations)
+        public IActionResult Get(JToken locations)
         {
             try
             {
