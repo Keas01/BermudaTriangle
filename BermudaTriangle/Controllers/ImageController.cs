@@ -21,13 +21,7 @@ namespace BermudaTriangle.Controllers
             factory = fac;
         }
 
-        [Route("Grid")]
-        public IActionResult Grid()
-        {
-            return Ok("Grid method found");
-        }
-
-        [Route("Location/{gRef}")]
+        [HttpGet("Location/{gRef}", Name = "loc")]
         public ActionResult<List<Coordinate>> Locations(string gRef)
         {
             try
