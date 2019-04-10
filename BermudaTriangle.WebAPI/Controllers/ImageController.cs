@@ -26,7 +26,7 @@ namespace BermudaTriangle.Controllers
         {
             try
             {
-                IImage t = factory.GetImage();
+                IImage t = factory.CreateImage();
 
                 if (Helper.AmIAGridRef(gRef))
                 {
@@ -49,7 +49,7 @@ namespace BermudaTriangle.Controllers
         {
             try
             {
-                IImage t = factory.GetImage();
+                IImage t = factory.CreateImage();
 
                 if (Helper.AmICoordinates(locations, out List<Coordinate> loc))
                 {
@@ -77,7 +77,7 @@ namespace BermudaTriangle.Controllers
                     return BadRequest("Please provide Image Vertices");
                 }
 
-                IImage t = factory.GetImage();
+                IImage t = factory.CreateImage();
                 List<Coordinate> loc = JsonConvert.DeserializeObject<List<Coordinate>>(locations.ToString());
 
                 string gridRef = t.WhoAmI(loc);

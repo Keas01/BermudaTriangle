@@ -19,7 +19,7 @@ namespace BermudaTriangle.Service.Test
         public void ResolveVertices_ValidCoordinates_TriangleSorted()
         {
             //Arrange
-            IImage gTotest = _factory.GetImage();
+            IImage gTotest = _factory.CreateImage();
 
             List<Coordinate> locations = new List<Coordinate>
             {
@@ -28,7 +28,7 @@ namespace BermudaTriangle.Service.Test
                 new Coordinate { X = 20, Y = 60 }
             };
 
-            ((Triangle)gTotest).ResolveVertices(locations);
+            ((RightAngleTriangle)gTotest).ResolveVertices(locations);
 
             Assert.IsTrue(gTotest != null);
         }
@@ -37,7 +37,7 @@ namespace BermudaTriangle.Service.Test
         public void ResolveVertices_InvalidCoordinates_ExceptionThrown()
         {
             //Arrange
-            IImage gTotest = _factory.GetImage();
+            IImage gTotest = _factory.CreateImage();
 
             List<Coordinate> locations = new List<Coordinate>
             {
@@ -56,7 +56,7 @@ namespace BermudaTriangle.Service.Test
         {
             //Arrange
 
-            IImage gTotest = _factory.GetImage();
+            IImage gTotest = _factory.CreateImage();
             Coordinate expectedTop = new Coordinate { X = 0, Y = 0 };
             Coordinate expectedCorner = new Coordinate { X = 0, Y = 10 };
             Coordinate expectedBottom = new Coordinate { X = 10, Y = 10 };
@@ -82,7 +82,7 @@ namespace BermudaTriangle.Service.Test
         public void WhereAmI_ValidTopTriangleGridReference_CoordinatesReturned()
         {
             //Arrange
-            IImage gTotest = _factory.GetImage();
+            IImage gTotest = _factory.CreateImage();
             Coordinate expectedTop = new Coordinate { X = 10, Y = 20 };
             Coordinate expectedCorner = new Coordinate { X = 20, Y = 20 };
             Coordinate expectedBottom = new Coordinate { X = 20, Y = 30 };
@@ -108,7 +108,7 @@ namespace BermudaTriangle.Service.Test
         public void WhoAmI_ValidBottomTriangleCoordinates_GridReferenceReturned()
         {
             //Arrange
-            IImage gTotest = _factory.GetImage();
+            IImage gTotest = _factory.CreateImage();
             string expected = "E9";
             List<Coordinate> locations = new List<Coordinate>
             {
@@ -128,7 +128,7 @@ namespace BermudaTriangle.Service.Test
         public void WhoAmI_ValidBottomTriangleCoordinatesInWrongOrder_GridReferenceReturned()
         {
             //Arrange
-            IImage gTotest = _factory.GetImage();
+            IImage gTotest = _factory.CreateImage();
             string expected = "E9";
             List<Coordinate> locations = new List<Coordinate>
             {
@@ -148,7 +148,7 @@ namespace BermudaTriangle.Service.Test
         public void WhoAmI_ValidTopTriangleCoordinates_GridReferenceReturned()
         {
             //Arrange
-            IImage gTotest = _factory.GetImage();
+            IImage gTotest = _factory.CreateImage();
             string expected = "F4";
             List<Coordinate> locations = new List<Coordinate>
             {
@@ -168,7 +168,7 @@ namespace BermudaTriangle.Service.Test
         public void WhoAmI_ValidTopTriangleCoordinatesInWrongOrder_GridReferenceReturned()
         {
             //Arrange
-            IImage gTotest = _factory.GetImage();
+            IImage gTotest = _factory.CreateImage();
             string expected = "F4";
             List<Coordinate> locations = new List<Coordinate>
             {
