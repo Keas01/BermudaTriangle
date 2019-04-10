@@ -6,6 +6,6 @@ namespace BermudaTriangle.Service
 {
     public abstract class ImageFactory : IImageFactory
     {
-        public abstract IImage GetImage();
+        public abstract IImage CreateImage();
     }
 }

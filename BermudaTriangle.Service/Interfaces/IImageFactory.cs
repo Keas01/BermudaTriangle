@@ -2,6 +2,6 @@
 {
     public interface IImageFactory
     {
-        IImage GetImage();
+        IImage CreateImage();
     }
 }

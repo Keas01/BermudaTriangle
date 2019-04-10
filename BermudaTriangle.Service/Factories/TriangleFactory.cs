@@ -6,9 +6,9 @@ namespace BermudaTriangle.Service
 {
     public class TriangleFactory : ImageFactory
     {
-        public override IImage GetImage()
+        public override IImage CreateImage()
         {
-            return new Triangle();
+            return new RightAngleTriangle();
         }
     }
 }
