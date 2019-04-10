@@ -8,5 +8,7 @@ namespace BermudaTriangle.Service
     public abstract class Image
     {
         public int ImageSide { get; set; }
+
+        public IList<Coordinate> Coordinates { get; set; }
     }
 }

@@ -42,27 +42,31 @@ namespace BermudaTriangle.Service
         public string WhoAmI(List<Coordinate> locations)
         {
             ResolveVertices(locations);
-            int row;
-            int col;
-            if (_top.Y == _corner.Y)//top triangle
+            return string.Format("{0}{1}", Helper.Number2String(CalculateRow(), true), CalculateColumn());
+        }
+
+        private int CalculateColumn()
+        {
+            int col = (_corner.X / ImageSide) * 2;
+
+            if (_top.X == _corner.X)
             {
-                //0
-                row = (_corner.Y / ImageSide) + 1;
-            }
-            else
-            {
-                row = (_corner.Y / ImageSide);
+                col++;
             }
 
-            if (_top.X == _corner.X)//bottom triangle
+            return col;
+        }
+
+        private int CalculateRow()
+        {
+            int row = (_corner.Y / ImageSide);
+            if (_top.Y == _corner.Y)
             {
-                col = ((_corner.X / ImageSide) * 2) + 1;
+                //0
+                row++;
             }
-            else
-            {
-                col = (_corner.X / ImageSide) * 2;
-            }
-            return string.Format("{0}{1}", Helper.Number2String(row, true), col);
+
+            return row;
         }
 
         public List<Coordinate> WhereAmI(string gRef)
