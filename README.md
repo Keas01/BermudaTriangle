@@ -1,11 +1,11 @@
 # BermudaTriangle
 **Objective**
 
-To create a Asp.Core WebAPI endpoint that would return the point of a trangle when given a grid reference such as 'A1' or return the grid reference when given the points of a triangle.
+To create a C# WebAPI endpoint using ASP.Net Core that would return the points of a trangle when given a grid reference such as 'A1' or return the grid reference when given the points of a triangle.
 
 **URL**
 
-The webapi is hosted in Azure the URL is http://seanapps.azurewebsites.net/
+The webapi is hosted in Azure. The URL is http://seanapps.azurewebsites.net/
 
 **Sample Endpoints:**
 
