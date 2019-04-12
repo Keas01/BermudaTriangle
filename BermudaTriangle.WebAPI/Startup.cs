@@ -32,7 +32,7 @@ namespace BermudaTriangle
 
             app.Run(async (context) =>
             {
-                await context.Response.WriteAsync("Failed to use MVC");
+                await context.Response.WriteAsync("Incorrect URL");
             });
         }
     }
