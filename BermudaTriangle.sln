@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BermudaTriangle", "BermudaTriangle\BermudaTriangle.csproj", "{42838072-A94F-4CF4-B88D-BD401BC4BBC0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BermudaTriangle.WebAPI", "BermudaTriangle.WebAPI\BermudaTriangle.WebAPI.csproj", "{42838072-A94F-4CF4-B88D-BD401BC4BBC0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BermudaTriangle.Service", "BermudaTriangle.Service\BermudaTriangle.Service.csproj", "{28C3B71C-EB99-4327-BCB6-74BF7A731827}"
 EndProject
