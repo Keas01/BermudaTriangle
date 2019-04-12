@@ -21,7 +21,7 @@ namespace BermudaTriangle.Service.Test
         }
 
         [TestMethod, TestCategory("WepAPI")]
-        public void GetByGridRef_ValidGridRef_LocationsReturned()
+        public void GetLocations_ValidGridRef_LocationsReturned()
         {
             //Arrange
             string getUrl = string.Format("{0}/Location/a1", _url);
@@ -48,6 +48,20 @@ namespace BermudaTriangle.Service.Test
 
             Assert.AreEqual(expectedBottom.X, actualBottom.X);
             Assert.AreEqual(expectedBottom.Y, actualBottom.Y);
+        }
+
+        [TestMethod, TestCategory("WepAPI")]
+        public void GetLocations_GridRefOutsideGridBoundaries_BadRequesReturned()
+        {
+            //Arrange
+            string getUrl = string.Format("{0}/Location/a13", _url);
+            HttpStatusCode expected = HttpStatusCode.BadRequest;
+            //Act
+            HttpResponseMessage response = _client.GetAsync(getUrl).Result;
+            HttpStatusCode actual = response.StatusCode;
+
+            //Assert
+            Assert.AreEqual(expected, actual);
         }
 
         [TestMethod, TestCategory("WepAPI")]
@@ -84,6 +98,28 @@ namespace BermudaTriangle.Service.Test
             HttpResponseMessage response = _client.GetAsync(getUrl).Result;
 
             string actual = response.Content.ReadAsStringAsync().Result;
+
+            //Assert
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod, TestCategory("WepAPI")]
+        public void GetByLocation_LocationsOutsideGridBoundaries_BadRequestReturned()
+        {
+            //Arrange
+            List<Coordinate> locations = new List<Coordinate>
+            {
+                new Coordinate { X = 10, Y = 70 }
+            };
+
+            HttpStatusCode expected = HttpStatusCode.BadRequest;
+
+            string getUrl = string.Format("{0}/GridReference/{1}", _url, JsonConvert.SerializeObject(locations));
+
+            //Act
+            HttpResponseMessage response = _client.GetAsync(getUrl).Result;
+
+            HttpStatusCode actual = response.StatusCode;
 
             //Assert
             Assert.AreEqual(expected, actual);
